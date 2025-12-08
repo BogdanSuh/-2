@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>🗑 Удалить пост?</h2>
+<p>«{{ post.content|truncatechars:50 }}»</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="danger">Да, удалить</button>
+    <a href="{% url 'post_detail' post.pk %}">Отмена</a>
+</form>
+{% endblock %}

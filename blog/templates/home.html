@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block title %}Главная — Микроблог{% endblock %}
+{% block content %}
+<h1>Лента постов</h1>
+{% for post in posts %}
+<article class="post">
+    <header>
+        <strong><a href="{% url 'profile' %}">{{ post.author.username }}</a></strong>
+        <small title="{{ post.created_at }}">{{ post.created_at|naturaltime }}</small>
+    </header>
+    <div class="post-content">{{ post.content }}</div>
+    <div class="post-meta">
+        👍 <a href="{% url 'toggle_like' post.pk %}">{{ post.like_count }}</a> |
+        💬 {{ post.comment_count }} |
+        <a href="{% url 'post_detail' post.pk %}">Открыть</a>
+    </div>
+</article>
+{% empty %}
+<p>Пока никто ничего не написал.</p>
+{% endfor %}
+{% if posts.has_other_pages %}
+<div class="pagination">
+    {% if posts.has_previous %}
+        <a href="?page={{ posts.previous_page_number }}">&larr; Назад</a>
+    {% endif %}
+    Страница {{ posts.number }} из {{ posts.paginator.num_pages }}
+    {% if posts.has_next %}
+        <a href="?page={{ posts.next_page_number }}">Вперёд &rarr;</a>
+    {% endif %}
+</div>
+{% endif %}
+{% endblock %}

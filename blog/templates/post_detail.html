@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block title %}Пост — {{ post.author.username }}{% endblock %}
+{% block content %}
+<article class="post">
+    <header>
+        <strong>{{ post.author.username }}</strong>
+        <small title="{{ post.created_at }}">{{ post.created_at|naturaltime }}</small>
+    </header>
+    <div class="post-content">{{ post.content }}</div>
+    <div class="post-meta">
+        👍 <a href="{% url 'toggle_like' post.pk %}">{{ post.like_count }}</a> |
+        💬 {{ post.comment_count }}
+    </div>
+    {% if user == post.author %}
+        <p>
+            <a href="{% url 'edit_post' post.pk %}">✎ Изменить</a> |
+            <a href="{% url 'delete_post' post.pk %}" class="danger">🗑 Удалить</a>
+        </p>
+    {% endif %}
+</article>
+<hr>
+<h3>Комментарии ({{ comments|length }})</h3>
+{% if user.is_authenticated %}
+<form method="post" action="{% url 'add_comment' post.pk %}">
+    {% csrf_token %}
+    <textarea name="content" rows="3" placeholder="Напишите комментарий..." required></textarea>
+    <button type="submit">Отправить</button>
+</form>
+{% else %}
+<p><a href="{% url 'login' %}">Войдите</a>, чтобы оставить комментарий.</p>
+{% endif %}
+<div class="comments">
+{% for comment in comments %}
+<div class="comment">
+    <header>
+        <strong>{{ comment.author.username }}</strong>
+        <small>{{ comment.created_at|naturaltime }}</small>
+    </header>
+    <div>{{ comment.content }}</div>
+    {% if user == comment.author %}
+        <span>
+            <a href="{% url 'edit_comment' comment.pk %}">✎</a>
+            <a href="{% url 'delete_comment' comment.pk %}" class="danger">🗑</a>
+        </span>
+    {% endif %}
+</div>
+{% endfor %}
+</div>
+<a href="{% url 'home' %}">&larr; Назад к ленте</a>
+{% endblock %}

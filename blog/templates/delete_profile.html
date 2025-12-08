@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}Удалить профиль{% endblock %}
+{% block content %}
+<h1 style="color: #c0392b;">⚠️ Удалить профиль?</h1>
+<p>Это действие <strong>необратимо</strong>. Все ваши посты и комментарии будут удалены.</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="danger">Да, удалить мой профиль</button>
+    <a href="{% url 'profile' %}">Отмена</a>
+</form>
+{% endblock %}

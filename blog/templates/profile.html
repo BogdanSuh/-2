@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static humanize %}
+{% block title %}Профиль — {{ user.username }}{% endblock %}
+{% block content %}
+<div class="profile-header">
+    {% if user.profile.avatar %}
+        <img src="{{ user.profile.avatar.url }}" alt="Аватар" class="profile-avatar">
+    {% else %}
+        <div class="profile-avatar" style="display: flex; align-items: center; justify-content: center; background: #bdc3c7; color: white;">
+            {{ user.username|first|upper }}
+        </div>
+    {% endif %}
+    <div class="profile-info">
+        <h2>{{ user.username }}</h2>
+        <p>{{ user.profile.bio|default:"Пока ничего не написал(а) о себе." }}</p>
+        <p>
+            <a href="{% url 'edit_profile' %}">✎ Редактировать профиль</a> |
+            <a href="{% url 'delete_profile' %}" class="danger">🗑 Удалить аккаунт</a>
+        </p>
+    </div>
+</div>
+<h2>Ваши посты ({{ user_posts.paginator.count }})</h2>
+{% for post in user_posts %}
+<article class="post">
+    <header>
+        <strong>Вы</strong>
+        <small title="{{ post.created_at }}">{{ post.created_at|naturaltime }}</small>
+    </header>
+    <div class="post-content">{{ post.content }}</div>
+    <div class="post-meta">
+        👍 {{ post.like_count }} | 💬 {{ post.comment_count }} |
+        <a href="{% url 'edit_post' post.pk %}">✎</a>
+        <a href="{% url 'delete_post' post.pk %}" class="danger">🗑</a>
+    </div>
+</article>
+{% empty %}
+<p>У вас пока нет постов.</p>
+{% endfor %}
+{% if user_posts.has_other_pages %}
+<div class="pagination">
+    {% if user_posts.has_previous %}
+        <a href="?page={{ user_posts.previous_page_number }}">&larr; Назад</a>
+    {% endif %}
+    Страница {{ user_posts.number }} из {{ user_posts.paginator.num_pages }}
+    {% if user_posts.has_next %}
+        <a href="?page={{ user_posts.next_page_number }}">Вперёд &rarr;</a>
+    {% endif %}
+</div>
+{% endif %}
+{% endblock %}
