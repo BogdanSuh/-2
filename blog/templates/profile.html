@@ -14,8 +14,8 @@
         <h2>{{ user.username }}</h2>
         <p>{{ user.profile.bio|default:"Пока ничего не написал(а) о себе." }}</p>
         <p>
-            <a href="{% url 'edit_profile' %}">✎ Редактировать профиль</a> |
-            <a href="{% url 'delete_profile' %}" class="danger">🗑 Удалить аккаунт</a>
+            <a href="{% url 'edit_profile' %}">Редактировать профиль</a> |
+            <a href="{% url 'delete_profile' %}" class="danger"> Удалить аккаунт</a>
         </p>
     </div>
 </div>
@@ -28,9 +28,9 @@
     </header>
     <div class="post-content">{{ post.content }}</div>
     <div class="post-meta">
-        👍 {{ post.like_count }} | 💬 {{ post.comment_count }} |
+        лайк {{ post.like_count }} | комент {{ post.comment_count }} |
         <a href="{% url 'edit_post' post.pk %}">✎</a>
-        <a href="{% url 'delete_post' post.pk %}" class="danger">🗑</a>
+        <a href="{% url 'delete_post' post.pk %}" class="danger">удалить</a>
     </div>
 </article>
 {% empty %}

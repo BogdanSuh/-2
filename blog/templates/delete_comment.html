@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-<h3>🗑 Удалить комментарий?</h3>
+<h3> Удалить комментарий?</h3>
 <p>«{{ comment.content|truncatechars:50 }}»</p>
 <form method="post">
     {% csrf_token %}

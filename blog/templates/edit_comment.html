@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-<h3>✎ Редактировать комментарий</h3>
+<h3>Редактировать комментарий</h3>
 <form method="post">
     {% csrf_token %}
     <textarea name="content" rows="3" required>{{ comment.content }}</textarea>

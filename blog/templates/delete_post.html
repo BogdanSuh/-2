@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-<h2>🗑 Удалить пост?</h2>
+<h2>🗑Удалить пост?</h2>
 <p>«{{ post.content|truncatechars:50 }}»</p>
 <form method="post">
     {% csrf_token %}

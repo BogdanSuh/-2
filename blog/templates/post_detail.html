@@ -9,13 +9,13 @@
     </header>
     <div class="post-content">{{ post.content }}</div>
     <div class="post-meta">
-        👍 <a href="{% url 'toggle_like' post.pk %}">{{ post.like_count }}</a> |
-        💬 {{ post.comment_count }}
+        лайк <a href="{% url 'toggle_like' post.pk %}">{{ post.like_count }}</a> |
+        комент {{ post.comment_count }}
     </div>
     {% if user == post.author %}
         <p>
-            <a href="{% url 'edit_post' post.pk %}">✎ Изменить</a> |
-            <a href="{% url 'delete_post' post.pk %}" class="danger">🗑 Удалить</a>
+            <a href="{% url 'edit_post' post.pk %}"> Изменить</a> |
+            <a href="{% url 'delete_post' post.pk %}" class="danger"> Удалить</a>
         </p>
     {% endif %}
 </article>
@@ -40,8 +40,8 @@
     <div>{{ comment.content }}</div>
     {% if user == comment.author %}
         <span>
-            <a href="{% url 'edit_comment' comment.pk %}">✎</a>
-            <a href="{% url 'delete_comment' comment.pk %}" class="danger">🗑</a>
+            <a href="{% url 'edit_comment' comment.pk %}">изменить</a>
+            <a href="{% url 'delete_comment' comment.pk %}" class="danger">удалить</a>
         </span>
     {% endif %}
 </div>
